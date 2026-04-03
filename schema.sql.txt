@@ -1,0 +1,113 @@
+-- =========================================
+-- HOTEL MANAGEMENT SYSTEM DATABASE SCHEMA
+-- =========================================
+
+-- 1. DEPARTMENT
+CREATE TABLE Department (
+    department_name VARCHAR2(20) PRIMARY KEY,
+    manager_id      CHAR(4) NOT NULL,
+    manager_name    VARCHAR2(20) NOT NULL
+);
+
+-- 2. STAFF
+CREATE TABLE Staff (
+    staff_id         CHAR(4) PRIMARY KEY,
+    department_name  VARCHAR2(20) NOT NULL,
+    first_name       VARCHAR2(20) NOT NULL,
+    last_name        VARCHAR2(20) NOT NULL,
+    email            VARCHAR2(50) NOT NULL,
+    role             VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_staff_department
+        FOREIGN KEY (department_name) REFERENCES Department(department_name)
+);
+
+-- 3. ROOM
+CREATE TABLE Room (
+    room_number VARCHAR2(10) PRIMARY KEY,
+    room_type   VARCHAR2(20) NOT NULL
+);
+
+-- 4. GUEST
+CREATE TABLE Guest (
+    guest_id    CHAR(4) PRIMARY KEY,
+    first_name  VARCHAR2(20) NOT NULL,
+    last_name   VARCHAR2(20) NOT NULL,
+    email       VARCHAR2(50) NOT NULL,
+    phone       VARCHAR2(20) NOT NULL
+);
+
+-- 5. BOOKING
+CREATE TABLE Booking (
+    booking_id     CHAR(4) PRIMARY KEY,
+    guest_id       CHAR(4) NOT NULL,
+    room_number    VARCHAR2(10) NOT NULL,
+    checkin_date   DATE NOT NULL,
+    checkout_date  DATE NOT NULL,
+    total_cost     NUMBER(10,2) NOT NULL,
+    CONSTRAINT fk_booking_guest
+        FOREIGN KEY (guest_id) REFERENCES Guest(guest_id),
+    CONSTRAINT fk_booking_room
+        FOREIGN KEY (room_number) REFERENCES Room(room_number)
+);
+
+-- 6. FEEDBACK
+CREATE TABLE Feedback (
+    feedback_id       CHAR(4) PRIMARY KEY,
+    guest_id          CHAR(4) NOT NULL,
+    rating            NUMBER(1,0) NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    feedback_comment  VARCHAR2(50),
+    feedback_date     DATE NOT NULL,
+    CONSTRAINT fk_feedback_guest
+        FOREIGN KEY (guest_id) REFERENCES Guest(guest_id)
+);
+
+-- 7. HOTEL_SERVICE
+CREATE TABLE Hotel_Service (
+    hotel_service_name  VARCHAR2(50) PRIMARY KEY,
+    department_name     VARCHAR2(20) NOT NULL,
+    hotel_service_cost  NUMBER(10,2) NOT NULL,
+    CONSTRAINT fk_service_department
+        FOREIGN KEY (department_name) REFERENCES Department(department_name)
+);
+
+-- 8. SERVICE_REQUEST
+CREATE TABLE Service_Request (
+    service_request_id  CHAR(4) PRIMARY KEY,
+    guest_id            CHAR(4) NOT NULL,
+    hotel_service_name  VARCHAR2(50) NOT NULL,
+    request_date        DATE NOT NULL,
+    status              VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_request_guest
+        FOREIGN KEY (guest_id) REFERENCES Guest(guest_id),
+    CONSTRAINT fk_request_service
+        FOREIGN KEY (hotel_service_name) REFERENCES Hotel_Service(hotel_service_name)
+);
+
+-- 9. PAYMENT
+CREATE TABLE Payment (
+    payment_id          CHAR(4) PRIMARY KEY,
+    guest_id            CHAR(4) NOT NULL,
+    booking_id          CHAR(4) NOT NULL,
+    service_request_id  CHAR(4),
+    payment_date        DATE,
+    payment_amount      NUMBER(10,2) NOT NULL,
+    CONSTRAINT fk_payment_guest
+        FOREIGN KEY (guest_id) REFERENCES Guest(guest_id),
+    CONSTRAINT fk_payment_booking
+        FOREIGN KEY (booking_id) REFERENCES Booking(booking_id),
+    CONSTRAINT fk_payment_request
+        FOREIGN KEY (service_request_id) REFERENCES Service_Request(service_request_id)
+);
+
+-- 10. MAINTENANCE
+CREATE TABLE Maintenance (
+    task_id                   CHAR(4) PRIMARY KEY,
+    room_number               VARCHAR2(10) NOT NULL,
+    staff_id                  CHAR(4) NOT NULL,
+    maintenance_date          DATE NOT NULL,
+    maintenance_description   VARCHAR2(50),
+    CONSTRAINT fk_maintenance_room
+        FOREIGN KEY (room_number) REFERENCES Room(room_number),
+    CONSTRAINT fk_maintenance_staff
+        FOREIGN KEY (staff_id) REFERENCES Staff(staff_id)
+);

@@ -1,0 +1,77 @@
+-- =========================================
+-- INSERT DATA FOR HOTEL MANAGEMENT SYSTEM
+-- =========================================
+
+-- 1. DEPARTMENT
+INSERT ALL
+    INTO Department VALUES ('FrontDesk', 'S001', 'John Smith')
+    INTO Department VALUES ('Housekeep', 'S002', 'Mary Jones')
+    INTO Department VALUES ('Maintenance', 'S003', 'David Brown')
+    INTO Department VALUES ('RoomService', 'S004', 'Sarah Lee')
+SELECT * FROM dual;
+
+-- 2. STAFF
+INSERT ALL
+    INTO Staff VALUES ('S001', 'FrontDesk', 'John', 'Smith', 'john@hotel.com', 'Manager')
+    INTO Staff VALUES ('S002', 'Housekeep', 'Mary', 'Jones', 'mary@hotel.com', 'Manager')
+    INTO Staff VALUES ('S003', 'Maintenance', 'David', 'Brown', 'david@hotel.com', 'Manager')
+    INTO Staff VALUES ('S004', 'RoomService', 'Sarah', 'Lee', 'sarah@hotel.com', 'Manager')
+    INTO Staff VALUES ('S005', 'FrontDesk', 'Emma', 'Clark', 'emma@hotel.com', 'Receptionist')
+    INTO Staff VALUES ('S006', 'Maintenance', 'James', 'Wilson', 'james@hotel.com', 'Technician')
+SELECT * FROM dual;
+
+-- 3. ROOM
+INSERT ALL
+    INTO Room VALUES ('R101', 'Single')
+    INTO Room VALUES ('R102', 'Double')
+    INTO Room VALUES ('R201', 'Suite')
+    INTO Room VALUES ('R202', 'Single')
+SELECT * FROM dual;
+
+-- 4. GUEST
+INSERT ALL
+    INTO Guest VALUES ('G001', 'Alice', 'Johnson', 'alice@gmail.com', '2025551111')
+    INTO Guest VALUES ('G002', 'Michael', 'Davis', 'michael@gmail.com', '2025552222')
+    INTO Guest VALUES ('G003', 'Sophia', 'Miller', 'sophia@gmail.com', '2025553333')
+SELECT * FROM dual;
+
+-- 5. BOOKING
+INSERT ALL
+    INTO Booking VALUES ('B001', 'G001', 'R101', DATE '2026-03-01', DATE '2026-03-05', 450.00)
+    INTO Booking VALUES ('B002', 'G002', 'R102', DATE '2026-03-03', DATE '2026-03-06', 600.00)
+    INTO Booking VALUES ('B003', 'G003', 'R201', DATE '2026-03-10', DATE '2026-03-15', 1200.00)
+SELECT * FROM dual;
+
+-- 6. FEEDBACK
+INSERT ALL
+    INTO Feedback VALUES ('F001', 'G001', 5, 'Excellent service', DATE '2026-03-05')
+    INTO Feedback VALUES ('F002', 'G002', 4, 'Clean room and good staff', DATE '2026-03-06')
+    INTO Feedback VALUES ('F003', 'G003', 3, 'Good but expensive', DATE '2026-03-15')
+SELECT * FROM dual;
+
+-- 7. HOTEL_SERVICE
+INSERT ALL
+    INTO Hotel_Service VALUES ('Laundry', 'Housekeep', 25.00)
+    INTO Hotel_Service VALUES ('Room Dining', 'RoomService', 40.00)
+    INTO Hotel_Service VALUES ('Repair Support', 'Maintenance', 0.00)
+SELECT * FROM dual;
+
+-- 8. SERVICE_REQUEST
+INSERT ALL
+    INTO Service_Request VALUES ('R001', 'G001', 'Laundry', DATE '2026-03-02', 'Completed')
+    INTO Service_Request VALUES ('R002', 'G002', 'Room Dining', DATE '2026-03-04', 'Completed')
+    INTO Service_Request VALUES ('R003', 'G003', 'Laundry', DATE '2026-03-12', 'Pending')
+SELECT * FROM dual;
+
+-- 9. PAYMENT
+INSERT ALL
+    INTO Payment VALUES ('P001', 'G001', 'B001', 'R001', DATE '2026-03-05', 475.00)
+    INTO Payment VALUES ('P002', 'G002', 'B002', 'R002', DATE '2026-03-06', 640.00)
+    INTO Payment VALUES ('P003', 'G003', 'B003', 'R003', DATE '2026-03-15', 1225.00)
+SELECT * FROM dual;
+
+-- 10. MAINTENANCE
+INSERT ALL
+    INTO Maintenance VALUES ('M001', 'R101', 'S006', DATE '2026-03-07', 'Air conditioner inspection')
+    INTO Maintenance VALUES ('M002', 'R201', 'S006', DATE '2026-03-11', 'Bathroom pipe repair')
+SELECT * FROM dual;
